@@ -3,9 +3,36 @@ import { get } from '@vueuse/core';
 import type { Plugin } from 'vue';
 import { createI18n } from 'vue-i18n';
 
+const supportedLocales = Object.keys(messages);
+
+function getDefaultLocale(): string {
+  // 1. Check localStorage for saved preference
+  const saved = localStorage.getItem('locale');
+  if (saved && supportedLocales.includes(saved)) {
+    return saved;
+  }
+
+  // 2. Detect from browser language
+  for (const lang of navigator.languages ?? [navigator.language]) {
+    // Exact match (e.g. "zh")
+    const code = lang.toLowerCase();
+    if (supportedLocales.includes(code)) {
+      return code;
+    }
+    // Prefix match (e.g. "zh-CN" -> "zh")
+    const prefix = code.split('-')[0];
+    if (supportedLocales.includes(prefix)) {
+      return prefix;
+    }
+  }
+
+  return 'en';
+}
+
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: getDefaultLocale(),
+  fallbackLocale: 'en',
   messages,
 });
 

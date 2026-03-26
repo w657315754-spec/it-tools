@@ -20,6 +20,11 @@ const localeOptions = computed(() =>
     value: locale,
   })),
 );
+
+watch(locale, (val) => {
+  localStorage.setItem('locale', val);
+  document.documentElement.lang = val;
+});
 </script>
 
 <template>
