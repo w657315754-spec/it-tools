@@ -23,7 +23,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build && node scripts/generate-sitemap.mjs",
+    "build": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build && node scripts/generate-sitemap.mjs && node scripts/prerender.mjs",
+    "build:no-prerender": "vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build && node scripts/generate-sitemap.mjs",
     "preview": "vite preview --port 5050",
     "test": "npm run test:unit",
     "test:unit": "vitest --environment jsdom",
