@@ -135,7 +135,14 @@ const tools = computed<ToolCategory[]>(() => [
           </c-button>
         </c-tooltip>
       </div>
-      <slot />
+      <div class="main-with-sidebar">
+        <div class="main-content">
+          <slot />
+        </div>
+        <aside v-if="!styleStore.isSmallScreen" class="sidebar-ad">
+          <AdSlot slot-type="sidebar" />
+        </aside>
+      </div>
     </template>
   </MenuLayout>
 </template>
@@ -151,6 +158,28 @@ const tools = computed<ToolCategory[]>(() => [
 //     background-position: 0 0, @position @position;
 //     background-size: @size @size;
 // }
+
+.main-with-sidebar {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+
+  .main-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sidebar-ad {
+    flex-shrink: 0;
+    width: 300px;
+    position: sticky;
+    top: 26px;
+
+    @media (max-width: 1200px) {
+      display: none;
+    }
+  }
+}
 
 .support-button {
   background: rgb(37, 99, 108);

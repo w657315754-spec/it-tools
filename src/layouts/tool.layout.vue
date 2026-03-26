@@ -52,9 +52,13 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
       </div>
     </div>
 
+    <AdSlot slot-type="top" />
+
     <div class="tool-content">
       <slot />
     </div>
+
+    <AdSlot slot-type="bottom" />
   </BaseLayout>
 </template>
 
